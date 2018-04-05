@@ -31,19 +31,22 @@ namespace Tools.CrashReporter.CrashReportWebSite.DataModels
 
         static Crash()
         {
-            string AWSError;
-            AWSCredentials AWSCredentialsForOutput = new StoredProfileAWSCredentials(Settings.Default.AWSS3ProfileName, Settings.Default.AWSCredentialsFilepath);
-            AmazonS3Config S3ConfigForOutput = new AmazonS3Config
-            {
-                ServiceURL = Settings.Default.AWSS3URL
-            };
+			if (Settings.Default.DownloadFromS3)
+			{
+				string AWSError;
+				AWSCredentials AWSCredentialsForOutput = new StoredProfileAWSCredentials(Settings.Default.AWSS3ProfileName, Settings.Default.AWSCredentialsFilepath);
+				AmazonS3Config S3ConfigForOutput = new AmazonS3Config
+				{
+					ServiceURL = Settings.Default.AWSS3URL
+				};
 
-            AmazonClient = new AmazonClient(AWSCredentialsForOutput, null, S3ConfigForOutput, out AWSError);
+				AmazonClient = new AmazonClient(AWSCredentialsForOutput, null, S3ConfigForOutput, out AWSError);
 
-            if (!AmazonClient.IsS3Valid)
-            {
-                System.Diagnostics.Debug.WriteLine("Failed to initailize S3");
-            }
+				if (!AmazonClient.IsS3Valid)
+				{
+					System.Diagnostics.Debug.WriteLine("Failed to initailize S3");
+				}
+			}
         }
 
         /// <summary>If available, will read CrashContext.runtime-xml.</summary>
@@ -56,8 +59,11 @@ namespace Tools.CrashReporter.CrashReportWebSite.DataModels
                 if (bHasCrashContext)
                 {
                     //_CrashContext = FGenericCrashContext.FromFile(SitePath + GetCrashContextUrl());
-                    _CrashContext = FGenericCrashContext.FromUrl(GetCrashContextUrl());
-                    bool bTest = _CrashContext != null && !string.IsNullOrEmpty(_CrashContext.PrimaryCrashProperties.FullCrashDumpLocation);
+                    _CrashContext = Settings.Default.DownloadFromS3 ?
+										FGenericCrashContext.FromUrl(GetCrashContextUrl()) :
+										null;
+
+					bool bTest = _CrashContext != null && !string.IsNullOrEmpty(_CrashContext.PrimaryCrashProperties.FullCrashDumpLocation);
                     if (bTest)
                     {
                         _bUseFullMinidumpPath = true;
@@ -128,10 +134,11 @@ namespace Tools.CrashReporter.CrashReportWebSite.DataModels
         public string GetLogUrl()
         {
             // Check compressed first. Then uncompressed
-            string fileName = GetFilePath("_Launch.log" + Settings.Default.AWSS3CompressedSuffix);
-            if (fileName == null)
+            string fileName = Settings.Default.DownloadFromS3 ? GetFilePath("_Launch.log" + Settings.Default.AWSS3CompressedSuffix) : null;
+
+			if (fileName == null)
             {
-                GetFilePath("_Launch.log");
+				fileName = GetFilePath("_Launch.log");
             }
 
             return fileName;
@@ -143,11 +150,11 @@ namespace Tools.CrashReporter.CrashReportWebSite.DataModels
         public string GetMiniDumpUrl()
         {
             // Check compressed first. Then uncompressed
-            string fileName = GetFilePath("_MiniDump.dmp" + Settings.Default.AWSS3CompressedSuffix);
-            if (fileName == null)
+            string fileName = Settings.Default.DownloadFromS3 ? GetFilePath("_MiniDump.dmp" + Settings.Default.AWSS3CompressedSuffix) : null;
+			if (fileName == null)
             {
-                GetFilePath("_MiniDump.dmp");
-            }
+				fileName = GetFilePath("_MiniDump.dmp");
+			}
 
             return fileName;
         }

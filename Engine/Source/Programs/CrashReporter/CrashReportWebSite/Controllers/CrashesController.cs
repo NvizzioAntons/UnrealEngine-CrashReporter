@@ -16,7 +16,6 @@ using Tools.CrashReporter.CrashReportWebSite.DataModels;
 using Tools.CrashReporter.CrashReportWebSite.DataModels.Repositories;
 using Tools.CrashReporter.CrashReportWebSite.Properties;
 using Tools.CrashReporter.CrashReportWebSite.ViewModels;
-using Tools.DotNETCommon.XmlHandler;
 using Tools.CrashReporter.CrashReportCommon;
 using System.Data.SqlClient;
 using System.Runtime.Caching;

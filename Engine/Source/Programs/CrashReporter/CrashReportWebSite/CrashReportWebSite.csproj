@@ -33,6 +33,7 @@
     <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -363,22 +364,22 @@
     <Content Include="Scripts\UserFilterScript.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
-    <None Include="Views\Buggs\Index.cshtml" />
-    <None Include="Views\Buggs\Show.cshtml" />
-    <None Include="Views\Buggs\ViewBuggs.cshtml" />
-    <None Include="Views\CSV\CSV.cshtml" />
-    <None Include="Views\CSV\Index.cshtml" />
-    <None Include="Views\CSV\ViewCSV.cshtml" />
-    <None Include="Views\Dashboard\Index.cshtml" />
-    <None Include="Views\Crashes\Show.cshtml" />
-    <None Include="Views\Reports\Index.cshtml" />
+    <Content Include="Views\Buggs\Index.cshtml" />
+    <Content Include="Views\Buggs\Show.cshtml" />
+    <Content Include="Views\Buggs\ViewBuggs.cshtml" />
+    <Content Include="Views\CSV\CSV.cshtml" />
+    <Content Include="Views\CSV\Index.cshtml" />
+    <Content Include="Views\CSV\ViewCSV.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Crashes\Show.cshtml" />
+    <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Crashes\Index.cshtml" />
     <Content Include="Views\Crashes\ViewCrash.cshtml" />
-    <None Include="Views\Reports\SignUpResponse.cshtml" />
-    <None Include="Views\Reports\Unsubscribe.cshtml" />
-    <None Include="Views\Reports\ViewReports.cshtml" />
-    <None Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Reports\SignUpResponse.cshtml" />
+    <Content Include="Views\Reports\Unsubscribe.cshtml" />
+    <Content Include="Views\Reports\ViewReports.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -391,7 +392,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Content\Site.css" />
-    <None Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Web.config">
       <SubType>Designer</SubType>
     </Content>

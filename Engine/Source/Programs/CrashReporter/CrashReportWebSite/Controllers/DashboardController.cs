@@ -154,11 +154,10 @@ namespace Tools.CrashReporter.CrashReportWebSite.Controllers
 			{
 				Dictionary<DateTime, int> Results = new Dictionary<DateTime, int>();
 
-				var UsersIds = _entities.UserGroups.First(data => data.Id == UserGroupId ).Users.Select(data => data.Id);
-
 				// Trim Crashes to user group.
 				if( UserGroupId != DashboardController.AllUserGroupId )
 				{
+					var UsersIds = _entities.UserGroups.First(data => data.Id == UserGroupId).Users.Select(data => data.Id);
 					Crashes = Crashes.Where( Crash => UsersIds.Contains( Crash.UserId ) ).ToList();
 				}
 

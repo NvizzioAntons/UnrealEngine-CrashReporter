@@ -39,7 +39,7 @@ namespace Tools.CrashReporter.CrashReportWebSite.Controllers
 		{
 			using (var logTimer = new FAutoScopedLogTimer( this.GetType().ToString()))
 			{
-				var formData = new FormHelper( Request, BuggsForm, "CrashInTimeFrameGroup" );
+				var formData = new FormHelper( Request, BuggsForm, "TimeOfCrash");
 			    var results = GetResults( formData );
 				results.GenerationTime = logTimer.GetElapsedSeconds().ToString( "F2" );
 				return View( "Index", results );
