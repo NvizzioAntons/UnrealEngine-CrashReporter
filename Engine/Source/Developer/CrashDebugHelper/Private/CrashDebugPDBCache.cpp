@@ -325,7 +325,7 @@ FPDBCacheEntryPtr FPDBCache::ReadPDBCacheEntry( const FString& Directory )
 		NewEntry = MakeShareable( new FPDBCacheEntry( LastAccessTime ) );
 		*FileReader << *NewEntry;
 	}
-	else if( LastAccessTimeNoMeta != FDateTime::MinValue() )
+	else if( LastAccessTimeNoMeta == FDateTime::MinValue() )
 	{
 		// Calculate the size of this PDB Cache entry and update to the new version.
 		TArray<FString> PDBFiles;
