@@ -1,7 +1,7 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
-#include "../../../ThirdParty/zlib/v1.2.8/include/Win64/VS2013/zlib.h"
-#pragma comment( lib, "../../../ThirdParty/zlib/v1.2.8/lib/Win64/VS2013/zlibstatic.lib" )
+#include "../../../ThirdParty/zlib/v1.2.8/include/Win64/VS2015/zlib.h"
+#pragma comment( lib, "../../../ThirdParty/zlib/v1.2.8/lib/Win64/VS2015/zlibstatic.lib" )
 
 // Taken from GenericPlatform.h
 

@@ -171,33 +171,36 @@ namespace Tools.CrashReporter.CrashReportProcess
 
 			ReportIndex.ReadFromFile();
 
-			WriteEvent("Initializing AWS");
-			string AWSError;
-			AWSCredentials AWSCredentialsForDataRouter = new StoredProfileAWSCredentials(Config.Default.AWSProfileInputName, Config.Default.AWSCredentialsFilepath);
-			AmazonSQSConfig SqsConfigForDataRouter = new AmazonSQSConfig
+			if (Config.Default.CrashFilesToAWS)
 			{
-				ServiceURL = Config.Default.AWSSQSServiceInputURL
-			};
-			AmazonS3Config S3ConfigForDataRouter = new AmazonS3Config
-			{
-				ServiceURL = Config.Default.AWSS3ServiceInputURL
-			};
-			DataRouterAWS = new AmazonClient(AWSCredentialsForDataRouter, SqsConfigForDataRouter, S3ConfigForDataRouter, out AWSError);
-			if (!DataRouterAWS.IsSQSValid || !DataRouterAWS.IsS3Valid)
-			{
-				WriteFailure("AWS failed to initialize profile for DataRouter access. Error:" + AWSError);
-				StatusReporter.Alert("AWSFailInput", "AWS failed to initialize profile for DataRouter access", 0);
-			}
-			AWSCredentials AWSCredentialsForOutput = new StoredProfileAWSCredentials(Config.Default.AWSProfileOutputName, Config.Default.AWSCredentialsFilepath);
-			AmazonS3Config S3ConfigForOutput = new AmazonS3Config
-			{
-				ServiceURL = Config.Default.AWSS3ServiceOutputURL
-			};
-			OutputAWS = new AmazonClient(AWSCredentialsForOutput, null, S3ConfigForOutput, out AWSError);
-			if (!OutputAWS.IsS3Valid)
-			{
-				WriteFailure("AWS failed to initialize profile for output S3 bucket access. Error:" + AWSError);
-				StatusReporter.Alert("AWSFailOutput", "AWS failed to initialize profile for output S3 bucket access", 0);
+				WriteEvent("Initializing AWS");
+				string AWSError;
+				AWSCredentials AWSCredentialsForDataRouter = new StoredProfileAWSCredentials(Config.Default.AWSProfileInputName, Config.Default.AWSCredentialsFilepath);
+				AmazonSQSConfig SqsConfigForDataRouter = new AmazonSQSConfig
+				{
+					ServiceURL = Config.Default.AWSSQSServiceInputURL
+				};
+				AmazonS3Config S3ConfigForDataRouter = new AmazonS3Config
+				{
+					ServiceURL = Config.Default.AWSS3ServiceInputURL
+				};
+				DataRouterAWS = new AmazonClient(AWSCredentialsForDataRouter, SqsConfigForDataRouter, S3ConfigForDataRouter, out AWSError);
+				if (!DataRouterAWS.IsSQSValid || !DataRouterAWS.IsS3Valid)
+				{
+					WriteFailure("AWS failed to initialize profile for DataRouter access. Error:" + AWSError);
+					StatusReporter.Alert("AWSFailInput", "AWS failed to initialize profile for DataRouter access", 0);
+				}
+				AWSCredentials AWSCredentialsForOutput = new StoredProfileAWSCredentials(Config.Default.AWSProfileOutputName, Config.Default.AWSCredentialsFilepath);
+				AmazonS3Config S3ConfigForOutput = new AmazonS3Config
+				{
+					ServiceURL = Config.Default.AWSS3ServiceOutputURL
+				};
+				OutputAWS = new AmazonClient(AWSCredentialsForOutput, null, S3ConfigForOutput, out AWSError);
+				if (!OutputAWS.IsS3Valid)
+				{
+					WriteFailure("AWS failed to initialize profile for output S3 bucket access. Error:" + AWSError);
+					StatusReporter.Alert("AWSFailOutput", "AWS failed to initialize profile for output S3 bucket access", 0);
+				}
 			}
 
 			// Add directory watchers

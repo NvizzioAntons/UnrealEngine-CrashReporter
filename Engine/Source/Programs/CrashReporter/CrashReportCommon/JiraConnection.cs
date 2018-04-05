@@ -377,7 +377,7 @@ public class JiraConnection
 	public HttpWebResponse JiraRequest( string RequestUrl, JiraMethod Method, object Input, HttpStatusCode ExpectedStatus )
 	{
 		HttpWebResponse Response = JiraRequest( RequestUrl, Method, Input );
-		if( Response.StatusCode != ExpectedStatus )
+		if( Response == null || Response.StatusCode != ExpectedStatus )
 		{
 			return null;
 		}
@@ -389,7 +389,12 @@ public class JiraConnection
 	/// </summary>
 	public static Dictionary<string, object> ParseJiraResponse( HttpWebResponse Response )
 	{
-		using( StreamReader ResponseReader = new StreamReader( Response.GetResponseStream() ) )
+		if (Response == null)
+		{
+			return new Dictionary<string, object>();
+		}
+
+		using ( StreamReader ResponseReader = new StreamReader( Response.GetResponseStream() ) )
 		{
 			string ResponseText = ResponseReader.ReadToEnd();
 			JavaScriptSerializer Serializer = new JavaScriptSerializer();
@@ -402,7 +407,11 @@ public class JiraConnection
 	/// </summary>
 	public static List<Dictionary<string, object>> ParseJiraResponseIntoList( HttpWebResponse Response )
 	{
-		using( StreamReader ResponseReader = new StreamReader( Response.GetResponseStream() ) )
+		if (Response == null)
+		{
+			return new List<Dictionary<string, object>>();
+		}
+		using ( StreamReader ResponseReader = new StreamReader( Response.GetResponseStream() ) )
 		{
 			string ResponseText = ResponseReader.ReadToEnd();
 			JavaScriptSerializer Serializer = new JavaScriptSerializer();
